@@ -2,54 +2,77 @@ package com.example.chint.recyclarview;
 
 import android.app.LauncherActivity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by chint on 6/22/2017.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.viewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 
-    private List<ListItems> listItems;
-    private Context context;
+    String[] title;
+    String[] description;
+    int[] images;
+    Context context;
 
-    public MyAdapter(List<ListItems> listItems, Context context) {
-        this.listItems = listItems;
+    public static final int zero = 1;
+    public static final int one = 2;
+
+    public MyAdapter(Context context, String[] title, String[] description, int[] images) {
+        this.title = title;
+        this.description = description;
+        this.images = images;
         this.context = context;
     }
 
     @Override
-    public MyAdapter.viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_list, parent, false);
-        return new viewHolder(v);
+    public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType){
+            case zero: return new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.items_list, parent, false));
+            case one: return new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.items_list2, parent, false));
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(MyAdapter.viewHolder holder, int position) {
-        ListItems listItem = listItems.get(position);
-        holder.title.setText(listItem.getTitle());
-        holder.desc.setText(listItem.getDescription());
+    public void onBindViewHolder(MyHolder holder, final int position) {
+
+
+        if(holder.getItemViewType() == zero) {
+            holder.img.setImageResource(images[position]);
+            holder.desc.setText(description[position]);
+            holder.title.setText(title[position]);
+        }
+        else if (holder.getItemViewType() == one){
+            holder.bimg.setImageResource(images[position]);
+            holder.bdesc.setText(description[position]);
+            holder.btitle.setText(title[position]);
+        }
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                Toast.makeText(context, title[position]+": "+description[position], Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (position == 0 ? zero : one);
     }
 
     @Override
     public int getItemCount() {
-        return listItems.size();
-    }
-
-    public class viewHolder extends RecyclerView.ViewHolder{
-
-        public TextView title, desc;
-        public viewHolder(View itemView) {
-            super(itemView);
-
-            title = (TextView) itemView.findViewById(R.id.text1);
-            desc = (TextView) itemView.findViewById(R.id.text2);
-        }
+        return title.length;
     }
 }
