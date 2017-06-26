@@ -2,6 +2,7 @@ package com.example.chint.recyclarview;
 
 import android.app.LauncherActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,14 +62,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Toast.makeText(context, title[position]+": "+description[position], Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, title[position]+": "+description[position], Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(context, DetailedActivity.class);
+                i.putExtra("image", images[position]);
+                i.putExtra("title", title[position]);
+                i.putExtra("desc", description[position]);
+                context.startActivity(i);
             }
         });
     }
 
     @Override
     public int getItemViewType(int position) {
-        return (position == 0 ? zero : one);
+        return (position % 2 ==  0 ? zero : one);
     }
 
     @Override
