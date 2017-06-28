@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/RecyclarView.iml" filepath="$PROJECT_DIR$/RecyclarView.iml" />
       <module fileurl="file://$PROJECT_DIR$/RecyclerView-Android.iml" filepath="$PROJECT_DIR$/RecyclerView-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
